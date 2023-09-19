@@ -162,10 +162,12 @@ def adjacent_matrix(graph,n):
 
 
 #Shortest path algorithm with quantum annealing
-def shortest_path(n,We,graph,adjacent,start,end):
+def shortest_path(n,We,graph,start,end):
+
+    adjacent = adjacent_matrix(graph,n)
     
     if adjacent[start,end] == 1:
-        station = [start,end]
+        path = [start,end]
         if start > end:
             shortest_dist = We[end,start]
         else:
@@ -188,6 +190,10 @@ def shortest_path(n,We,graph,adjacent,start,end):
         term1 = 0.5*np.dot(y,np.dot(adjacent,y.transpose()))
         term2 = quicksum([y[k] for k in range(n) if (k!=end) and (k!=start)])
         cqm.add_constraint(term1-term2 == 1)
+
+        #Start and end need to have exactly one connection with the graph
+        cqm.add_constraint(quicksum([adjacent[start,k]*y[k] for k in range(n)]) == 1)
+        cqm.add_constraint(quicksum([adjacent[end,k]*y[k] for k in range(n)]) == 1)
     
         token = "Insert Dwave API token"
         cqm_sampler = LeapHybridCQMSampler(token=token)
@@ -445,10 +451,8 @@ def fitness(nx_graph,W,chromo):
     
     n = len(nx_graph.nodes)
     
-    
     lines = [nx.shortest_path(nx_graph,chromo[2*i],chromo[2*i+1]) for i in range(int(len(chromo)/2))]
     nl = len(lines)
-    
     
     stations = []
     for i in range(nl):
@@ -458,7 +462,7 @@ def fitness(nx_graph,W,chromo):
         fitness = 10000000
         
     else:
-        fitness = np.mean([transfer_freq(nx_graph,chromo,i,j) for i in range(n) for j in range(i+1,n)])
+        fitness = avg_transfer_freq(nx_graph,chromo)
     
     #calculate increased overall length of the network
     lines_length = [nx.shortest_path_length(nx_graph,chromo[2*i],chromo[2*i+1],weight="weight") for i in range(int(len(chromo)/2))]
