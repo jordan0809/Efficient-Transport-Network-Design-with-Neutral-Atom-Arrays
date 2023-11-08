@@ -1,0 +1,74 @@
+\documentclass[10pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{cite}
+\usepackage{fancyhdr}
+%\usetikzlibrary{decorations.pathmorphing}
+\usepackage{graphicx}
+%\usepackage{braket}
+%\usepackage{bbm}
+%\usepackage[colorlinks=true]{hyperref}
+%\usepackage{unicode-math}
+
+\title{Title}
+\author{Mudassir Moosa\\\date{ }}
+
+\newcommand{\wpsi}{\widehat{\psi}}
+\newcommand{\wwpsi}{\widetilde{\psi}}
+\newcommand{\wrho}{\widehat{\rho}}
+\newcommand{\wwrho}{\widetilde{\rho}}
+\newcommand{\wS}{\widehat{S}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\OO}{\mathcal{O}}
+\newcommand{\p}{\hat{p}}
+\newcommand{\x}{\hat{x}}
+\newcommand{\im}{\int d^{d-2}y' \int_{0}^{\infty} dx' \,}
+\newcommand{\imm}{\int d^{d-2}z' \int_{0}^{\infty} dx' \,}
+\newcommand{\iz}{\int d^{d-2}z'}
+\newcommand{\ix}{\int_{0}^{\infty} dx'}
+\newcommand{\izz}{\int_{0}^{\infty} dz}
+\newcommand{\nn}{\nonumber}
+\newcommand{\tm}[2]{\begin{pmatrix} #1 \\ #2 \end{pmatrix}}
+\newcommand{\bra}[1]{\langle #1|}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\braket}[2]{\langle #1|#2\rangle}
+\newcommand{\normsq}[1]{||#1||^{2}}
+\newcommand{\ev}[1]{\langle #1 \rangle}
+
+\oddsidemargin  0.0in
+\evensidemargin 0.0in
+\textwidth      6.5in
+\headheight     -30pt%05pt
+\topmargin      0.0in
+\textheight=8.0in
+\setlength{\parindent}{0in}
+
+%\pagestyle{fancy}
+
+
+\begin{document}
+
+{\bf Calculation $\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad$ Mudassir Moosa}	\\
+
+The best-known classical algorithm for solving the maximum weight independent set (MWIS) problem has a complexity of $O(1.2^{n})$ where $n$ is the number of nodes \cite{2013arXiv1312.6260X}. We take this complexity as an estimation of the number of flops needed to implement this algorithm. Now let us consider a graph with $n=250$ nodes. The estimate for the number of operations needed to find MWIS is then $1.2^{250} \, = \, 6.2\times 10^{19}$.\\
+
+Now we consider a cluster of $3$ GPUs. Each GPU is known to operate at a rate of $2.6$ Tflops per second, i.e. $2.6 \times 10^{12}$ flops per second. So a cluster of $3$ GPUs can do $7.8\times 10^{12}$ flops per second. At this rate, $3$ GPUs can find the aforementioned MWIS in approximately $2000$ hours. \\
+
+Moving on, let us consider an HPC that can operate at the rate of $7 $ Pflops per second, i.e., $7.0\times 10^{15}$. This HPC can solve the MWIS problem with $n=250$ in approximately $2.5$ hours.\\
+
+Now let us consider a quantum computer (QC). We solve the MWIS problem by implementing the adiabatic evolution on an analog QC. Let us assume that we need $10^5$ shots of measurement to extract the desired result. During the Q/A session for the third round of this Hackathon, we learned that each shot of measurement can be done in $1$ second. Using the time to do $10^5$ measurements as a proxy of the total time taken, we deduce that it will take a QC of around $27$ hours to solve the MWIS problem. \\
+
+We enter the estimates of the time that a GPU, HPC, and QC would take to solve the MWIS problem on the provided excel file. \\
+
+
+
+
+
+\bibliographystyle{utcaps}
+\bibliography{all}
+
+
+\end{document}
